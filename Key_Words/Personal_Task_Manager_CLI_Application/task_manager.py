@@ -18,6 +18,8 @@ def add_task(name, due_date=None):
     task = Task(name, due_date)
     tasks.append(task)
     print(f"Task added: {task}")
+    save_tasks()
+
 
 def list_tasks():
     """List all tasks."""
@@ -35,7 +37,7 @@ def delete_task(task_id):
     except IndexError: 
         print("Invalid task ID.")
 
-def saving_in_file():
+def save_tasks():
    try:
     with open('tasks.txt',"w") as file:
        for task in tasks:
@@ -60,3 +62,32 @@ def load_tasks():
 
 # Step 3: Create the Main Menu
 
+def main_menu():
+    while True:
+        print("\n---Task Manager ---")
+        print("1. Add Task")
+        print("2. List Task")
+        print("3. Delete Task")
+        print("4. Exit")
+        choice = input("Choose an option: ")
+
+        if choice == "1":
+            name = input("Enter task name: ")
+            due_date = input("Enter due date (optional):")
+            add_task(name,due_date if due_date else None)
+
+        elif choice == "2":
+            list_tasks()
+        elif choice == "3":
+            task_id = int(input("Enter task Id to delete: "))
+            delete_task(task_id)
+        elif choice == "4":
+            print("Exiting...")
+            break
+        else:
+            print("Invalid choice. Please try again.")   
+
+    if __name__ == "__main__":
+        load_tasks()
+        main_menu()
+        save_tasks() 
